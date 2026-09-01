@@ -1,0 +1,53 @@
+preset:
+  name: knowledge-layer
+  version: 1
+  spec_version: 3
+  description: >
+    A second (or later) ingest-target knowledge layer, for material that
+    deserves its own scope, vocabulary or voice — technical vs. soft-skills,
+    say. Reuses the core content/concept tag rather than providing a new one.
+  provides:
+    tags:      []
+    templates: []
+  requires: []
+  prompts:
+    - {key: path,        question: "Folder name?",                              default: knowledge-2/}
+    - {key: title,        question: "Layer title?",                             default: "Knowledge (second)"}
+    - {key: scope,        question: "What belongs here, in a sentence or two?", default: ""}
+
+layer:
+  path: "{{path}}"
+  archetype: hub-tree
+  title: "{{title}}"
+  description: "{{scope}}"
+  structure:
+    depth: unbounded
+    beyond: strict
+    index: required
+    levels:
+      - {tag: content/hub, template: hub}
+    thresholds:
+      max_children: 15
+      split_siblings: 3
+      promote_backlinks: 8
+      max_words: 800
+  vocabulary:
+    content: [concept]
+    require_exactly_one: true
+    frontmatter:
+      required: [title, tags, hubs]
+      recommended: [description, created, updated]
+  templates: {hub: hub, default: concept, index: index}
+  language: inherit
+  ingest_target: true
+  scope: "{{scope}}"
+  links:
+    inbound_from: [knowledge]
+    outbound_to:  [knowledge, assets]
+  access:
+    read:      "*"
+    write:     [ingest, capture, refactor]
+    structure: [ingest, capture, scaffold, refactor]
+    delete:    [refactor]
+  discoverable: true
+  checks: [core, structure, thresholds, quality, links]

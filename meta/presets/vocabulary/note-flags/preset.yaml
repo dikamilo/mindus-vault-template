@@ -1,0 +1,13 @@
+preset:
+  name: note-flags
+  version: 1
+  spec_version: 3
+  description: >
+    In-note markers you apply by hand (contested/unverified/stale/
+    needs-example). Enables lint's stale-flag check, which reads them; no
+    skill ever writes one.
+  provides:
+    tags:      [flag/contested, flag/unverified, flag/stale, flag/needs-example]
+    templates: []
+  requires: []
+  prompts: []

@@ -1,0 +1,7 @@
+{
+  "attachmentFolderPath": "assets",
+  "userIgnoreFilters": [
+    "AGENTS.md",
+    "CLAUDE.md"
+  ]
+}

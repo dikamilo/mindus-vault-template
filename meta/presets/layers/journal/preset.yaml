@@ -1,0 +1,39 @@
+preset:
+  name: journal
+  version: 1
+  spec_version: 3
+  description: >
+    A flat, dated pile of personal journal entries with its own voice. The
+    only shipped preset exercising the `flat` archetype for material a human
+    writes directly, rather than material a skill manages.
+  provides:
+    tags:      [content/journal-entry]
+    templates: [journal-entry]
+    voice:     [journal]
+  requires: []
+  prompts:
+    - {key: path, question: "Folder name?", default: journal/}
+
+layer:
+  path: "{{path}}"
+  archetype: flat
+  title: Journal
+  description: Dated personal entries.
+  holds: notes
+  dated: true
+  retention: keep
+  vocabulary:
+    content: [journal-entry]
+    require_exactly_one: true
+    frontmatter:
+      required: [title, tags, date]
+      recommended: [description]
+  voice: {notes: journal}
+  ingest_target: false
+  discoverable: true
+  links: {inbound_from: "*", outbound_to: "*"}
+  access:
+    write:     [capture]
+    structure: []
+    delete:    [refactor]
+  checks: [core, flat, links]

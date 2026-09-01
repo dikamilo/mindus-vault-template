@@ -1,0 +1,42 @@
+preset:
+  name: library
+  version: 1
+  spec_version: 3
+  description: >
+    Permanent primary material — courses, books, decks, exercises. Structure is
+    enforced for two levels (shelf, then collection) and free below that.
+  provides:
+    tags:      [content/collection, content/source]
+    templates: [shelf, collection]
+  requires: []
+  prompts:
+    - {key: path, question: "Folder name?", default: library/}
+
+layer:
+  path: "{{path}}"
+  archetype: hub-tree
+  title: Library
+  description: Primary material kept permanently.
+  structure:
+    depth: 2
+    beyond: free
+    index: required
+    levels:
+      - {name: shelf,      tag: content/hub,        template: shelf}
+      - {name: collection, tag: content/collection, template: collection}
+  vocabulary:
+    content: [source]
+    require_exactly_one: false
+    frontmatter:
+      required: [title, tags]
+      recommended: [hubs]
+  language: any
+  ingest_target: false
+  discoverable: true
+  links: {inbound_from: "*"}
+  access:
+    read: "*"
+    write: []
+    structure: [scaffold]
+    delete: []
+  checks: [core, level-hubs, links]

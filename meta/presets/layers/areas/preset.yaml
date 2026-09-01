@@ -1,0 +1,44 @@
+preset:
+  name: areas
+  version: 1
+  spec_version: 3
+  description: >
+    A shallow hub-tree of ongoing responsibilities that do not end, unlike
+    projects.
+  provides:
+    tags:      [content/area]
+    templates: [area]
+  requires: []
+  prompts:
+    - {key: path, question: "Folder name?", default: areas/}
+
+layer:
+  path: "{{path}}"
+  archetype: hub-tree
+  title: Areas
+  description: Ongoing responsibilities with no defined end.
+  structure:
+    depth: 1
+    beyond: free
+    index: required
+    levels:
+      - {name: area, tag: content/area, template: area}
+    thresholds:
+      max_children: 30
+      split_siblings: 3
+      promote_backlinks: 8
+      max_words: 800
+  vocabulary:
+    content: [concept]
+    require_exactly_one: true
+    frontmatter:
+      required: [title, tags, hubs]
+      recommended: [description, created, updated]
+  ingest_target: false
+  discoverable: true
+  links: {inbound_from: "*"}
+  access:
+    write:     [capture, refactor]
+    structure: [capture, scaffold, refactor]
+    delete:    [refactor]
+  checks: [core, structure, thresholds, quality, links]
