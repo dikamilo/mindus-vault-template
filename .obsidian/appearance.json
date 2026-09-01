@@ -1,0 +1,9 @@
+{
+  "cssTheme": "Baseline",
+  "translucency": true,
+  "showRibbon": false,
+  "baseFontSize": 20,
+  "interfaceFontFamily": "",
+  "textFontFamily": "JetBrains Mono",
+  "monospaceFontFamily": "JetBrains Mono"
+}
