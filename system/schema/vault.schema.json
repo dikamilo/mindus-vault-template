@@ -241,10 +241,38 @@
       }
     },
     "layer": {
-      "allOf": [
-        {"$ref": "#/definitions/layerProperties"},
-        {"required": ["path"]}
-      ]
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "archetype": {"type": "string", "enum": ["hub-tree", "flat"]},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "templates": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "role": {"type": "string", "enum": ["inbox", "outputs", "assets"]},
+        "protected": {"type": "boolean"},
+        "holds": {"type": "string", "enum": ["notes", "files"]},
+        "language": {"$ref": "#/definitions/language"},
+        "discoverable": {"type": "boolean"},
+        "ingest_target": {"type": "boolean"},
+        "scope": {"type": "string"},
+        "voice": {"$ref": "#/definitions/voiceMap"},
+        "doc": {"$ref": "#/definitions/path"},
+        "checks": {"$ref": "#/definitions/checks"},
+        "structure": {"$ref": "#/definitions/structure"},
+        "consumable": {"type": "boolean"},
+        "dated": {"type": "boolean"},
+        "retention": {"$ref": "#/definitions/duration"},
+        "partitions": {"$ref": "#/definitions/partitions"},
+        "vocabulary": {"$ref": "#/definitions/vocabulary"},
+        "links": {"$ref": "#/definitions/links"},
+        "access": {"$ref": "#/definitions/access"},
+        "lifecycle": {"$ref": "#/definitions/lifecycle"}
+      }
     }
   },
   "properties": {
