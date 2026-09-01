@@ -27,8 +27,13 @@ Never infer the layout from a directory listing. A folder that is not in
    deletion. Nothing else is ever deleted as a side effect. A requested deletion
    needs the target layer's `delete` grant and your confirmation; if no skill
    holds that grant, say so instead of working around it.
-5. Extract media to the assets layer *before* consuming a source. The source is
-   deleted; the images must not be.
+5. For every image in a source, decide before consuming it: recreate it as
+   text (a Mermaid diagram, a markdown table, prose) inside the note it
+   supports, keep it as-is by extracting it to the assets layer and embedding
+   it, or ignore it as decorative. Only images you decide to keep are written
+   to assets — never save one nothing embeds. Make the decision before the
+   source is deleted; a kept image not yet extracted is lost the moment the
+   source goes.
 6. Capture verbatim quotes at ingest — the source will be gone.
 7. Every note needs the frontmatter its layer requires. In a knowledge-shaped
    layer that means `title`, one `content/*` tag from its vocabulary, and `hubs`

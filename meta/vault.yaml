@@ -137,7 +137,7 @@ layers:
     checks: [frontmatter, partition-valid, partition-tag, retention,
              output-links-notes, worklist-abandoned]
 
-  assets:                       # role: assets — destination for extracted media
+  assets:                       # role: assets — destination for images kept in original form
     path: assets/
     role: assets
     protected: true

@@ -14,6 +14,23 @@ plugin, everywhere by default.
   stays a static markdown table.
 - **Tables** for structured comparisons; plain markdown, no plugin needed.
 - **Blockquotes** (`>`) for verbatim quotes, always attributed.
+- **Callouts** (`> [!note]`, `> [!warning]`, `> [!question]`, `> [!example]`,
+  …) are core Obsidian syntax, not a plugin — use them where a block genuinely
+  wants visual separation from surrounding prose: `[!question]` or
+  `[!warning]` for a hub's unresolved tensions and open questions,
+  `[!example]` for a worked example inside a concept note, `[!info]` for a
+  supporting aside that would otherwise interrupt the main claim. Don't box up
+  the note's central claim in a callout — that belongs in plain prose, read
+  first, not set apart.
+- **Mermaid diagrams** (` ```mermaid `) for a relationship, process or
+  hierarchy that is genuinely structural — recreated from a source image at
+  ingest time (see `system/skills/ingest/SKILL.md`), or built directly where
+  prose alone would blur the shape. Core Obsidian rendering, not a plugin.
+  **Prefer a vertical layout** (`graph TD` / `flowchart TD`) over a horizontal
+  one (`graph LR`) by default — a vertical diagram reads top-to-bottom the way
+  the surrounding note does, and doesn't get clipped by note width the way a
+  wide horizontal one can. Use `LR` only when the relationship is genuinely
+  a left-to-right sequence and forcing it vertical would distort it.
 - **Checkboxes** (`- [ ]` / `- [x]`) for lint findings only — that is the one
   place the vault relies on them being interactive, since Obsidian renders
   them as clickable natively.
