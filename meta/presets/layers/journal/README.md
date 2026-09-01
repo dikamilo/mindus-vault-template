@@ -2,8 +2,7 @@
 
 A flat, dated pile of personal entries — no hub grammar, no index, entries are
 peers identified by date. The only shipped preset that is `flat` and holds
-notes a human writes directly rather than material a skill manages, which is
-what makes it worth building and testing early (design spec §11.4): it is the
+notes a human writes directly rather than material a skill manages — the
 archetype's one real exercise outside the machine-managed layers.
 
 ## When you want this

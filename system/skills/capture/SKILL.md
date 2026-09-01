@@ -15,8 +15,8 @@ Writes: any layer granting `capture` write.
    `ingest_target` layer.
 2. Confirm the target layer grants `capture` write; if none does, say so.
 3. Search for an existing note on the same concept first — the same
-   extend-beats-create rule as `ingest` applies (§ hard rule 2 in
-   `system/system.md`).
+   extend-beats-create rule as `ingest` applies (`system/system.md`'s hard
+   rule 2).
 4. Write the note following `system/conventions/notes.md`: correct frontmatter,
    correct `hubs` entry, filed under the right hub.
 5. Add cross-links wherever the relationship is real.

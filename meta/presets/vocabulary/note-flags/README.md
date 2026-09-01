@@ -5,11 +5,11 @@ a layer's accepted tags, and enables lint's `stale-flag` check, which *reads*
 these flags once a layer has attached this preset.
 
 **No skill ever writes, changes or clears a flag, in any configuration.**
-Findings belong in outputs, not on notes (design spec §10.1) — this preset is
-the opt-in, visible exception that lets *you* leave an in-note marker by hand,
-not a way to route lint findings onto notes. If you want lint's own findings
-instead, read `outputs/lint/` — that's where they already live, wikilinked to
-every note they name.
+Findings belong in outputs, not on notes — this preset is the opt-in, visible
+exception that lets *you* leave an in-note marker by hand, not a way to route
+lint findings onto notes. If you want lint's own findings instead, read
+`outputs/lint/` — that's where they already live, wikilinked to every note
+they name.
 
 ## Applying it
 

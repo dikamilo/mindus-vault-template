@@ -45,8 +45,7 @@ Detected by `mindus.name` still holding the template default.
 3. Run the installation check (below) and report what it cannot fix.
 4. Run `lint` once. A fresh clone must come back clean; if it does not, say so
    plainly — the template itself is broken.
-5. Replace the template `README.md` with one describing *this* vault,
-   including a link back to the design repository.
+5. Replace the template `README.md` with one describing *this* vault.
 6. Append the first `log.md` entry.
 7. Mention that `meta/presets/` exists. Install nothing unasked.
 
@@ -112,7 +111,7 @@ Removing a layer never deletes its content. Every mutation writes a record to
 ## Reference files
 
 `references/layer.md`, `tag.md`, `template.md`, `preset.md`, `lifecycle.md` —
-guided-authoring detail for each kind of object. `references/checks.md` and
-`references/values.md` are the lint check registry and configuration value
-reference (Appendices C and D of the design spec), verbatim — load whichever
-this conversation actually needs, not both by default.
+guided-authoring detail for each kind of object. `references/checks.md` is the
+full lint check registry; `references/values.md` is the full configuration
+value reference. Load whichever this conversation actually needs, not all of
+them by default.

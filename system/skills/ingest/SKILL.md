@@ -12,7 +12,7 @@ Writes: layers with `ingest_target: true`; the `assets` layer; deletes from
 ## Before anything else
 
 Load `meta/vault.yaml`. Resolve every layer with `ingest_target: true` — there
-may be more than one (§13 in the design spec); read each one's `scope`. Confirm
+may be more than one; read each one's `scope`. Confirm
 `ingest` holds `write` on a candidate layer before routing anything to it; if it
 does not, say so rather than routing there anyway.
 
@@ -56,5 +56,5 @@ does not, say so rather than routing there anyway.
   layers, not just the one you are routing into.
 - If no layer's `write` grant includes `ingest`, stop and say so — do not fall
   back to a different layer.
-- An inbox partitioned by `raw.partitions` (§13.1) routes without a question;
-  the shipped inbox is unpartitioned.
+- An inbox partitioned by `raw.partitions` routes without a question; the
+  shipped inbox is unpartitioned.

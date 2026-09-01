@@ -1,9 +1,8 @@
 # `knowledge-layer` preset
 
 Adds a second `ingest_target` layer alongside `knowledge`, for a domain that
-deserves its own scope and voice without living in the same hub tree — see
-design spec §13 (multiple ingest targets). Reuses the core `content/concept`
-tag rather than shipping a new one.
+deserves its own scope and voice without living in the same hub tree. Reuses
+the core `content/concept` tag rather than shipping a new one.
 
 ## What installing this actually touches
 

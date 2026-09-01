@@ -1,13 +1,11 @@
 # Mindus vault template
 
-This is a [Mindus](https://github.com/dikamilo/mindus-spec) vault: a personal
-knowledge base built on plain markdown in Obsidian, maintained primarily by an
-LLM agent, and queryable by both a human and an agent.
+This is a Mindus vault: a personal knowledge base built on plain markdown in
+Obsidian, maintained primarily by an LLM agent, and queryable by both a human
+and an agent.
 
-It is empty of knowledge and complete in structure — conformant to the
-[design specification](https://github.com/dikamilo/mindus-spec) on this first
-commit. You can drop a file into `raw/` and say "ingest this" before running
-any setup.
+It is empty of knowledge and complete in structure on this first commit. You
+can drop a file into `raw/` and say "ingest this" before running any setup.
 
 ## Getting started
 
@@ -35,9 +33,10 @@ See `meta/presets/` for optional layers (projects, areas, a permanent library,
 a journal) and vocabulary (extended content types, note status, note flags)
 you can add as you need them.
 
-## Design
+## Why it works this way
 
-This template implements the [Mindus specification](https://github.com/dikamilo/mindus-spec).
-That document holds the rationale for every rule here; this vault holds the
-rules themselves. If you're wondering *why* the vault works a certain way,
-that's where to look.
+`system/system.md` and this vault's other operating instructions state the
+rules an agent follows; they're written to be followed without needing outside
+context. If a rule here seems arbitrary, ask your agent to explain it —
+`system/conventions/` and each `SKILL.md` carry the reasoning inline, not just
+the instruction.

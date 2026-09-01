@@ -39,8 +39,8 @@ Any may be `off`.
 | Note exceeds size guidance | `max_words`, 800 | Propose a split into atomic notes |
 | New material fits no existing hub | — | Place under nearest ancestor; flag for refactor |
 
-A threshold trip from `create-leaf-hub` or `move-one-level` is autonomous
-(§`policy.autonomy`); splitting, merging, deleting or renaming an existing hub is
+A threshold trip from `create-leaf-hub` or `move-one-level` is autonomous, per
+`policy.autonomy`; splitting, merging, deleting or renaming an existing hub is
 always approval-gated, because it touches material that already has a home.
 
 ## Hub prose, not lists

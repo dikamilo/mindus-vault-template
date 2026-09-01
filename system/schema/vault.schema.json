@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://mindus/schema/vault.schema.json",
   "title": "Mindus vault configuration",
-  "description": "Schema for meta/vault.yaml. See spec.md §5 and Appendix D.",
+  "description": "Schema for meta/vault.yaml — the vault's layers, policy, voice and templates.",
   "type": "object",
   "required": ["mindus", "layers"],
   "additionalProperties": false,
@@ -45,7 +45,7 @@
     },
     "checkId": {
       "type": "string",
-      "description": "A lint check id or group alias. See system/skills/configure/references/checks.md (Appendix C)."
+      "description": "A lint check id or group alias — see system/skills/configure/references/checks.md for the full registry."
     },
     "checks": {
       "oneOf": [
@@ -207,10 +207,9 @@
         "stale_after": {"$ref": "#/definitions/duration"}
       }
     },
-    "layer": {
+    "layerProperties": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["path"],
       "properties": {
         "path": {"$ref": "#/definitions/path"},
         "archetype": {"type": "string", "enum": ["hub-tree", "flat"]},
@@ -240,6 +239,12 @@
         "access": {"$ref": "#/definitions/access"},
         "lifecycle": {"$ref": "#/definitions/lifecycle"}
       }
+    },
+    "layer": {
+      "allOf": [
+        {"$ref": "#/definitions/layerProperties"},
+        {"required": ["path"]}
+      ]
     }
   },
   "properties": {
@@ -291,8 +296,7 @@
       }
     },
     "defaults": {
-      "$ref": "#/definitions/layer",
-      "required": []
+      "$ref": "#/definitions/layerProperties"
     },
     "templates": {
       "type": "object",

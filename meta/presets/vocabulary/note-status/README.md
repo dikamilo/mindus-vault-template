@@ -10,5 +10,6 @@ reached a terminal state. A project can be `status/draft` while `active`, or
 ## Applying it
 
 These tags are yours to apply by hand, in a note's `tags:` list, alongside its
-required `content/*` tag. No skill writes, changes or removes one — see design
-spec §10.1 on why findings never get written back onto a note.
+required `content/*` tag. No skill writes, changes or removes one: findings
+belong in `outputs/`, not on notes, and note status is your own judgement
+about the writing, not a finding a skill concluded.
