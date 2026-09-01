@@ -3,6 +3,20 @@
 The vault must be readable without tooling — plain markdown, no required
 plugin, everywhere by default.
 
+**No manual line wrapping inside a paragraph.** Write each paragraph, each
+bullet, and each blockquote as a single line in the file, however long, and
+let Obsidian (or any editor) soft-wrap it visually for display. Do not break a
+paragraph into a block of ~80-character lines the way source code or a plain
+text file might — a hard-wrapped paragraph looks fine until it's edited: a
+one-word change then shows as a multi-line diff, and the manual wrapping falls
+out of alignment with the surrounding sentence the moment anything changes.
+This applies to everything a skill *writes*: note bodies, hub prose, layer
+indexes, log entries, and outputs. It does not describe this document, or any
+other file under `system/` or `meta/` — those are instructions, read as
+source, and their own wrapping is not a style to copy into content. If a
+generated note looks like it was hard-wrapped, that's a mistake to fix, not a
+convention to preserve.
+
 - **Wikilinks** (`[[note-name]]`, `[[note-name|display text]]`) and **embeds**
   (`![[file.png]]`) are the one deliberate departure from plain-markdown-only:
   they are core Obsidian syntax, not a plugin, and the vault is an Obsidian

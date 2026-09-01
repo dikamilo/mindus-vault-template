@@ -39,11 +39,15 @@ Never infer the layout from a directory listing. A folder that is not in
    layer that means `title`, one `content/*` tag from its vocabulary, and `hubs`
    — except layer `index.md` files and material below the enforced depth. Layers
    declaring their own requirements, such as outputs, follow those instead.
-8. English everywhere, except the material in layers declaring `language: any` —
+8. Write each paragraph, bullet and blockquote as one line in the file, no
+   matter how long, and let the editor soft-wrap it. Do not hard-wrap prose at
+   a fixed column the way this file does — that convention is for instructions
+   read as source, never for content you write. See `meta/formatting.md`.
+9. English everywhere, except the material in layers declaring `language: any` —
    whose index and hub notes are still English. Translate during ingest.
-9. Never modify `system/` as a side effect of anything. If asked directly, say
-   what you are changing.
-10. Log what you did, before you finish.
+10. Never modify `system/` as a side effect of anything. If asked directly, say
+    what you are changing.
+11. Log what you did, before you finish.
 
 ## Load when you need it
 
