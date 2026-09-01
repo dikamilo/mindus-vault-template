@@ -14,7 +14,4 @@ template: entity
 
 # content/entity
 
-A specific, named thing — a person, organisation, tool, product, or place —
-rather than an idea about it. If a note is describing *what X is and does* as a
-proper noun with a fixed identity, it wants this tag; if it's explaining a
-mechanism or principle, it wants `content/concept` instead.
+A specific, named thing — a person, organisation, tool, product, or place — rather than an idea about it. If a note is describing *what X is and does* as a proper noun with a fixed identity, it wants this tag; if it's explaining a mechanism or principle, it wants `content/concept` instead.

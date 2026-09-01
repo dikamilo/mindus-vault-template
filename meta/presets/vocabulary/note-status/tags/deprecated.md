@@ -8,6 +8,4 @@ layers: []
 
 # status/deprecated
 
-Superseded or no longer trusted, but kept rather than deleted. Prefer linking
-to whatever replaced it. Applied by hand; no skill sets or clears it
-automatically.
+Superseded or no longer trusted, but kept rather than deleted. Prefer linking to whatever replaced it. Applied by hand; no skill sets or clears it automatically.

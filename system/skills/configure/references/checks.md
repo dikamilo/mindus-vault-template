@@ -1,8 +1,6 @@
 # The lint check registry
 
-Every id usable in a layer's `checks:`. **M** = mechanical; **J** = judgement.
-Severity is the default and is overridable per layer with a map:
-`checks: {orphans: info}`.
+Every id usable in a layer's `checks:`. **M** = mechanical; **J** = judgement. Severity is the default and is overridable per layer with a map: `checks: {orphans: info}`.
 
 ## Group aliases
 
@@ -103,6 +101,4 @@ Severity is the default and is overridable per layer with a map:
 
 ## Config — run by `configure`, not `lint`
 
-`config-schema`, `config-paths-exist`, `config-refs-exist`, `config-no-overlap`,
-`config-link-policy-agrees`, `config-roles-unique`, `config-checks-known`,
-`config-unknown-skill`, `config-vocabulary-agrees`, `config-unused`.
+`config-schema`, `config-paths-exist`, `config-refs-exist`, `config-no-overlap`, `config-link-policy-agrees`, `config-roles-unique`, `config-checks-known`, `config-unknown-skill`, `config-vocabulary-agrees`, `config-unused`.

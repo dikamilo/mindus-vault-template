@@ -75,8 +75,7 @@
 | `partitions.overrides.<name>.group_by` | `none` \| `month` \| `year` | `partitions.defaults.group_by` |
 | `partitions.overrides.<name>.routes_to` | layer name | none |
 
-With `by: writer`, each partition is named for the skill that writes it and its
-key here is that skill's name. With `by: list`, the keys are the folder names.
+With `by: writer`, each partition is named for the skill that writes it and its key here is that skill's name. With `by: list`, the keys are the folder names.
 
 ## `vocabulary`, `links`, `access`
 
@@ -139,9 +138,7 @@ Every action id must appear in exactly one class.
 | `voice.contexts.<name>` | path to a markdown file. Shipped contexts: `notes`, `hubs`, `query`, `synthesis`. Presets and `configure` may register more |
 | `layer.voice` | map of context name → voice name, overriding that context inside this layer. A bare string is shorthand for `{notes: <name>}` |
 
-Contexts name *what is being written*, not who writes it. Resolution for a
-given piece of writing, most specific first:
-`layer.voice.<context>` → `voice.contexts.<context>` → `voice.default`.
+Contexts name *what is being written*, not who writes it. Resolution for a given piece of writing, most specific first: `layer.voice.<context>` → `voice.contexts.<context>` → `voice.default`.
 
 ## `lifecycle` — preset layers
 
@@ -158,8 +155,7 @@ given piece of writing, most specific first:
 
 ## `preset.yaml`
 
-Not part of `vault.yaml`, but validated by `configure` and therefore part of
-the same reference.
+Not part of `vault.yaml`, but validated by `configure` and therefore part of the same reference.
 
 | Field | Values |
 |---|---|
