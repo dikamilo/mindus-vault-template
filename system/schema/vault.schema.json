@@ -1,0 +1,347 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mindus/schema/vault.schema.json",
+  "title": "Mindus vault configuration",
+  "description": "Schema for meta/vault.yaml — the vault's layers, policy, voice and templates.",
+  "type": "object",
+  "required": ["mindus", "layers"],
+  "additionalProperties": false,
+  "definitions": {
+    "duration": {
+      "type": "string",
+      "pattern": "^([0-9]+[dwmy]|keep|never)$",
+      "description": "<n>d | <n>w | <n>m | <n>y | keep | never"
+    },
+    "language": {
+      "type": "string",
+      "description": "ISO 639-1 code, or 'inherit' | 'any'"
+    },
+    "skillList": {
+      "description": "A list of skill names, '*', or []",
+      "oneOf": [
+        {"type": "string", "enum": ["*"]},
+        {"type": "array", "items": {"type": "string"}}
+      ]
+    },
+    "path": {
+      "type": "string",
+      "description": "Vault-relative path, trailing slash for folders"
+    },
+    "tag": {
+      "type": "string",
+      "pattern": "^[a-z-]+/[a-z-]+$"
+    },
+    "actionId": {
+      "type": "string",
+      "enum": [
+        "create-note", "extend-note", "create-leaf-hub", "move-one-level",
+        "cross-link", "rewrite-hub-prose", "save-asset", "consume-source",
+        "update-index", "append-log", "record-decision",
+        "split-hub", "merge-hub", "delete-hub", "rename-hub",
+        "move-across-top-level", "new-top-level", "delete-note",
+        "delete-asset", "delete-from-non-consumable", "bulk-change",
+        "install-preset", "attach-vocabulary", "edit-config", "edit-system"
+      ]
+    },
+    "checkId": {
+      "type": "string",
+      "description": "A lint check id or group alias — see system/skills/configure/references/checks.md for the full registry."
+    },
+    "checks": {
+      "oneOf": [
+        {"type": "array", "items": {"$ref": "#/definitions/checkId"}},
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["error", "warning", "info", "off"]
+          }
+        }
+      ]
+    },
+    "voiceMap": {
+      "oneOf": [
+        {"type": "string"},
+        {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        }
+      ]
+    },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "depth": {
+          "oneOf": [
+            {"type": "integer", "minimum": 0},
+            {"type": "string", "enum": ["unbounded"]}
+          ]
+        },
+        "beyond": {"type": "string", "enum": ["strict", "free"]},
+        "index": {"type": "string", "enum": ["required", "none"]},
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "tag": {"$ref": "#/definitions/tag"},
+              "name": {"type": "string"},
+              "template": {"type": "string"}
+            }
+          }
+        },
+        "thresholds": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "max_children": {"oneOf": [{"type": "integer"}, {"const": "off"}]},
+            "split_siblings": {"oneOf": [{"type": "integer"}, {"const": "off"}]},
+            "promote_backlinks": {"oneOf": [{"type": "integer"}, {"const": "off"}]},
+            "max_words": {"oneOf": [{"type": "integer"}, {"const": "off"}]},
+            "min_words": {"oneOf": [{"type": "integer"}, {"const": "off"}]}
+          }
+        }
+      }
+    },
+    "partitionOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tag": {"$ref": "#/definitions/tag"},
+        "retention": {"$ref": "#/definitions/duration"},
+        "group_by": {"type": "string", "enum": ["none", "month", "year"]},
+        "routes_to": {"type": "string"}
+      }
+    },
+    "partitions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "by": {"type": "string", "enum": ["writer", "list", "none"]},
+        "defaults": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "retention": {"$ref": "#/definitions/duration"},
+            "group_by": {"type": "string", "enum": ["none", "month", "year"]}
+          }
+        },
+        "overrides": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/partitionOverride"}
+        }
+      }
+    },
+    "vocabulary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "content": {"type": "array", "items": {"type": "string"}},
+        "require_exactly_one": {"type": "boolean"},
+        "tags": {"type": "array", "items": {"$ref": "#/definitions/tag"}},
+        "frontmatter": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "required": {"type": "array", "items": {"type": "string"}},
+            "recommended": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "inbound_from": {
+          "oneOf": [
+            {"type": "array", "items": {"type": "string"}},
+            {"type": "string", "enum": ["*"]}
+          ]
+        },
+        "outbound_to": {
+          "oneOf": [
+            {"type": "array", "items": {"type": "string"}},
+            {"type": "string", "enum": ["*"]}
+          ]
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "read": {"$ref": "#/definitions/skillList"},
+        "write": {"$ref": "#/definitions/skillList"},
+        "structure": {"$ref": "#/definitions/skillList"},
+        "delete": {"$ref": "#/definitions/skillList"}
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["values"],
+      "properties": {
+        "field": {"type": "string"},
+        "values": {"type": "array", "items": {"type": "string"}},
+        "initial": {"type": "string"},
+        "frontmatter": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "required": {"type": "array", "items": {"type": "string"}},
+            "optional": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "on_archive": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "action": {"type": "string", "enum": ["move", "tag-only"]},
+            "to": {"$ref": "#/definitions/path"},
+            "approval": {"type": "string", "enum": ["required", "none"]}
+          }
+        },
+        "stale_after": {"$ref": "#/definitions/duration"}
+      }
+    },
+    "layerProperties": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "archetype": {"type": "string", "enum": ["hub-tree", "flat"]},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "templates": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "role": {"type": "string", "enum": ["inbox", "outputs", "assets"]},
+        "protected": {"type": "boolean"},
+        "holds": {"type": "string", "enum": ["notes", "files"]},
+        "language": {"$ref": "#/definitions/language"},
+        "discoverable": {"type": "boolean"},
+        "ingest_target": {"type": "boolean"},
+        "scope": {"type": "string"},
+        "voice": {"$ref": "#/definitions/voiceMap"},
+        "doc": {"$ref": "#/definitions/path"},
+        "checks": {"$ref": "#/definitions/checks"},
+        "structure": {"$ref": "#/definitions/structure"},
+        "consumable": {"type": "boolean"},
+        "dated": {"type": "boolean"},
+        "retention": {"$ref": "#/definitions/duration"},
+        "partitions": {"$ref": "#/definitions/partitions"},
+        "vocabulary": {"$ref": "#/definitions/vocabulary"},
+        "links": {"$ref": "#/definitions/links"},
+        "access": {"$ref": "#/definitions/access"},
+        "lifecycle": {"$ref": "#/definitions/lifecycle"}
+      }
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {"$ref": "#/definitions/path"},
+        "archetype": {"type": "string", "enum": ["hub-tree", "flat"]},
+        "title": {"type": "string"},
+        "description": {"type": "string"},
+        "templates": {
+          "type": "object",
+          "additionalProperties": {"type": "string"}
+        },
+        "role": {"type": "string", "enum": ["inbox", "outputs", "assets"]},
+        "protected": {"type": "boolean"},
+        "holds": {"type": "string", "enum": ["notes", "files"]},
+        "language": {"$ref": "#/definitions/language"},
+        "discoverable": {"type": "boolean"},
+        "ingest_target": {"type": "boolean"},
+        "scope": {"type": "string"},
+        "voice": {"$ref": "#/definitions/voiceMap"},
+        "doc": {"$ref": "#/definitions/path"},
+        "checks": {"$ref": "#/definitions/checks"},
+        "structure": {"$ref": "#/definitions/structure"},
+        "consumable": {"type": "boolean"},
+        "dated": {"type": "boolean"},
+        "retention": {"$ref": "#/definitions/duration"},
+        "partitions": {"$ref": "#/definitions/partitions"},
+        "vocabulary": {"$ref": "#/definitions/vocabulary"},
+        "links": {"$ref": "#/definitions/links"},
+        "access": {"$ref": "#/definitions/access"},
+        "lifecycle": {"$ref": "#/definitions/lifecycle"}
+      }
+    }
+  },
+  "properties": {
+    "mindus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spec_version", "name", "language"],
+      "properties": {
+        "spec_version": {"type": "integer"},
+        "name": {"type": "string"},
+        "language": {"$ref": "#/definitions/language"}
+      }
+    },
+    "excluded": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/path"}
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ingest_window": {"$ref": "#/definitions/duration"},
+        "staleness_window": {"$ref": "#/definitions/duration"},
+        "log_rollover": {"type": "string", "enum": ["none", "yearly"]},
+        "default_ingest_target": {"type": "string"},
+        "bulk_threshold": {"type": "integer"},
+        "autonomy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["autonomous", "approval", "never"],
+          "properties": {
+            "autonomous": {"type": "array", "items": {"$ref": "#/definitions/actionId"}},
+            "approval": {"type": "array", "items": {"$ref": "#/definitions/actionId"}},
+            "never": {"type": "array", "items": {"$ref": "#/definitions/actionId"}}
+          }
+        }
+      }
+    },
+    "voice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["default"],
+      "properties": {
+        "default": {"$ref": "#/definitions/path"},
+        "contexts": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/path"}
+        }
+      }
+    },
+    "defaults": {
+      "$ref": "#/definitions/layerProperties"
+    },
+    "templates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "for", "variables"],
+        "properties": {
+          "file": {"$ref": "#/definitions/path"},
+          "for": {"type": "string"},
+          "variables": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "layers": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/definitions/layer"}
+    }
+  }
+}

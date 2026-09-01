@@ -1,0 +1,51 @@
+preset:
+  name: projects
+  version: 1
+  spec_version: 3
+  description: >
+    A shallow hub-tree of projects — one hub per project, decisions recorded
+    alongside it, archived projects moved rather than deleted.
+  provides:
+    tags:      [content/project, content/decision]
+    templates: [project, decision]
+  requires: []
+  prompts:
+    - {key: path, question: "Folder name?", default: projects/}
+
+layer:
+  path: "{{path}}"
+  archetype: hub-tree
+  title: Projects
+  description: Active and past projects, one hub each.
+  structure:
+    depth: 1
+    beyond: free
+    index: required
+    levels:
+      - {name: project, tag: content/project, template: project}
+    thresholds:
+      max_children: 30
+      split_siblings: off
+      promote_backlinks: 8
+      max_words: 800
+  vocabulary:
+    content: [decision]
+    require_exactly_one: true
+    frontmatter:
+      required: [title, tags, hubs]
+      recommended: [description, created, updated]
+  lifecycle:
+    field: status
+    values: [active, paused, done, archived]
+    initial: active
+    frontmatter: {required: [started], optional: [goal, ended]}
+    on_archive: {action: move, to: "{{path}}archive/", approval: required}
+    stale_after: 90d
+  ingest_target: false
+  discoverable: true
+  links: {inbound_from: "*"}
+  access:
+    write:     [capture, refactor]
+    structure: [capture, scaffold, refactor]
+    delete:    [refactor]
+  checks: [core, structure, thresholds, quality, links, lifecycle]

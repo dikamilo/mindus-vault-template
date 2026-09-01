@@ -1,0 +1,14 @@
+{
+  "attachmentFolderPath": "assets",
+  "userIgnoreFilters": [
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
+  "showInlineTitle": false,
+  "spellcheck": false,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "raw",
+  "alwaysUpdateLinks": true,
+  "defaultViewMode": "preview",
+  "openBehavior": ""
+}

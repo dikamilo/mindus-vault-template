@@ -1,0 +1,149 @@
+# yaml-language-server: $schema=../system/schema/vault.schema.json
+mindus:
+  spec_version: 3
+  name: My Vault
+  language: en
+
+excluded: [meta/, system/]
+
+policy:
+  ingest_window: 30d
+  staleness_window: 180d
+  log_rollover: yearly
+  default_ingest_target: knowledge
+  bulk_threshold: 10
+  autonomy:
+    autonomous: [create-note, extend-note, create-leaf-hub, move-one-level,
+                 cross-link, rewrite-hub-prose, save-asset, update-index,
+                 append-log, record-decision, consume-source]
+    approval:   [split-hub, merge-hub, delete-hub, rename-hub,
+                 move-across-top-level, new-top-level, delete-note,
+                 delete-asset, delete-from-non-consumable, bulk-change,
+                 install-preset, attach-vocabulary, edit-config]
+    never:      [edit-system]
+
+voice:
+  default: meta/voice/default.md
+  contexts:                    # what is being written, not who writes it
+    notes:     meta/voice/notes.md
+    hubs:      meta/voice/hubs.md
+    query:     meta/voice/query.md
+    synthesis: meta/voice/synthesis.md
+
+defaults:
+  archetype: hub-tree
+  structure: {depth: unbounded, beyond: strict, index: required}
+  language: inherit
+  discoverable: true
+  ingest_target: false
+  access: {read: "*", write: [], structure: [], delete: []}
+  links: {inbound_from: "*"}
+
+templates:
+  index:   {file: meta/templates/index.md,   for: content/index,   variables: [title, description]}
+  hub:     {file: meta/templates/hub.md,     for: content/hub,     variables: [title, description, hub]}
+  concept: {file: meta/templates/concept.md, for: content/concept, variables: [title, description, hub, date]}
+  output:  {file: meta/templates/output.md,  for: "output/*",      variables: [title, date, tag]}
+
+layers:
+  raw:                          # role: inbox — the ingest path's entrance
+    path: raw/
+    role: inbox
+    protected: true
+    archetype: flat
+    holds: files
+    consumable: true
+    discoverable: false
+    access: {read: [ingest, lint], write: "*", delete: [ingest]}
+    checks: [age-window]
+
+  knowledge:                    # the vault's reason to exist
+    path: knowledge/
+    archetype: hub-tree
+    protected: true
+    title: Knowledge
+    description: Distilled atomic notes organised into nested hubs.
+
+    structure:
+      depth: unbounded
+      beyond: strict
+      index: required
+      levels:
+        - {tag: content/hub, template: hub}
+      thresholds:
+        max_children: 15
+        split_siblings: 3
+        promote_backlinks: 8
+        max_words: 800
+
+    vocabulary:
+      content: [concept]
+      require_exactly_one: true
+      frontmatter:
+        required: [title, tags, hubs]
+        recommended: [description, created, updated]
+
+    templates: {hub: hub, default: concept, index: index}
+    language: inherit
+    voice: {notes: notes, hubs: hubs}
+
+    ingest_target: true
+    scope: |
+      General knowledge distilled from sources. Anything not tied to a project,
+      an area, or a specific body of primary material.
+
+    links:
+      inbound_from: [knowledge]
+      outbound_to:  [knowledge, assets]
+
+    access:
+      read:      "*"
+      write:     [ingest, capture, refactor]
+      structure: [ingest, capture, scaffold, refactor]
+      delete:    [refactor]
+    discoverable: true
+
+    checks: [core, structure, thresholds, quality, links]
+
+  outputs:                      # role: outputs — where six skills write
+    path: outputs/
+    role: outputs
+    protected: true
+    archetype: flat
+    holds: notes
+    dated: true
+    discoverable: false
+
+    partitions:
+      by: writer                 # one folder per skill in access.write, named for it
+      defaults: {retention: keep, group_by: none}
+      overrides:
+        query:      {tag: output/query,     retention: 365d}
+        synthesize: {tag: output/synthesis, retention: keep}
+        lint:       {tag: output/lint,      retention: 90d, group_by: month}
+        refactor:   {tag: output/refactor,  retention: keep}
+        review:     {tag: output/review,    retention: 365d}
+        configure:  {tag: output/config,    retention: keep}
+
+    vocabulary:
+      require_exactly_one: false     # outputs carry output/*, not content/*
+      frontmatter:
+        required: [title, tags, date]
+        recommended: [description]
+
+    access:
+      write:  [query, synthesize, lint, refactor, review, configure]
+      delete: [refactor]
+    checks: [frontmatter, partition-valid, partition-tag, retention,
+             output-links-notes, worklist-abandoned]
+
+  assets:                       # role: assets — destination for extracted media
+    path: assets/
+    role: assets
+    protected: true
+    archetype: flat
+    holds: files
+    discoverable: false
+    links: {inbound_from: "*"}
+    access: {read: "*", write: "*", delete: [refactor]}
+    checks: [orphan-assets]

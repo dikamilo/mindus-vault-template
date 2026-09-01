@@ -1,0 +1,12 @@
+preset:
+  name: note-status
+  version: 1
+  spec_version: 3
+  description: >
+    Marks how finished a note's writing is (draft/stable/deprecated) -
+    distinct from an item's own lifecycle, e.g. a project being archived.
+  provides:
+    tags:      [status/draft, status/stable, status/deprecated]
+    templates: []
+  requires: []
+  prompts: []
