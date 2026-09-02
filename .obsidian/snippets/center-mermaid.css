@@ -1,0 +1,7 @@
+/* Center Mermaid diagrams in reading and live preview */
+.markdown-preview-view .mermaid,
+.markdown-source-view .mermaid,
+.cm-preview-code-block .mermaid {
+  display: flex;
+  justify-content: center;
+}

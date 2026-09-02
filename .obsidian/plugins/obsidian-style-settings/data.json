@@ -22,7 +22,7 @@
   "baseline-style@@metadata-style": "metadata-cupertino",
   "baseline-style@@metadata-compact": false,
   "baseline-style@@metadata-list-tags": false,
-  "baseline-style@@metadata-heading-off": false,
+  "baseline-style@@metadata-heading-off": true,
   "baseline-style@@readable-spacing": true,
   "baseline-style@@colorful-headings-text": true,
   "baseline-style@@link-decoration": "underline",
@@ -39,5 +39,7 @@
   "baseline-style@@col-lines": false,
   "baseline-style@@table-numbers": false,
   "baseline-style@@table-tabular": false,
-  "baseline-style@@table-nowrap": false
+  "baseline-style@@table-nowrap": false,
+  "baseline-style@@metadata-longtext": true,
+  "baseline-style@@metadata-icons-off": false
 }
