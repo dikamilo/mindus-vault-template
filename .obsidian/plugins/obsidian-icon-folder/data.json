@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
-      "LiTableConfig",
-      "LiFolderOutput",
-      "LiInbox",
-      "LiSettings",
-      "LiBrain"
+      "LiFilePen",
+      "LiFileJson",
+      "LiToolCase",
+      "LiColumnsSettings",
+      "LiTags"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -39,5 +39,18 @@
   "system": "LiSettings",
   "raw": "LiInbox",
   "outputs": "LiFolderOutput",
-  "meta": "LiTableConfig"
+  "meta": "LiTableConfig",
+  "outputs/configure": "LiFileCog2",
+  "outputs/lint": "LiFileCheck",
+  "outputs/query": "LiFileQuestion",
+  "outputs/refactor": "LiFileSliders",
+  "outputs/review": "LiFileScan",
+  "outputs/synthesize": "LiFileInput",
+  "meta/voice": "LiLanguages",
+  "meta/templates": "LiLayoutTemplate",
+  "meta/tags": "LiTags",
+  "meta/presets": "LiColumnsSettings",
+  "system/skills": "LiToolCase",
+  "system/schema": "LiFileJson",
+  "system/conventions": "LiFilePen"
 }
