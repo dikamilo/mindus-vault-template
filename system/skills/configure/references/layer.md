@@ -40,4 +40,4 @@ Also set `scope:` — the prose `ingest` routes concepts by — and both sides o
 
 ## After writing the block
 
-Run the safety-rail validation in `SKILL.md` before treating the layer as live: paths exist, templates/tags/voice referenced exist, no path overlap, link policy agrees both directions, vocabulary and tag `layers:` agree. Then create the folder and call `scaffold` for its `index.md` — `configure` never writes that note itself.
+Run the safety-rail validation in `SKILL.md` before treating the layer as live: paths exist, templates/tags/voice referenced exist, no path overlap, link policy agrees both directions, vocabulary and tag `layers:` agree — including tags reused via `structure.levels[].tag` or `content/index` (`index: required`), which name a tag without appearing in `vocabulary:` at all and are easy to validate past. Then create the folder and call `scaffold` for its `index.md` — `configure` never writes that note itself.
