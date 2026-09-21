@@ -44,7 +44,7 @@ layer:                        # omit entirely for a vocabulary preset
 
 ## Validation before install
 
-Schema-valid `preset.yaml`; every tag in `provides.tags` present under `tags/`; every template the layer block references present under `templates/`; every `checks:` id in the registry; no reference to a layer outside itself.
+Schema-valid `preset.yaml`; every tag in `provides.tags` present under `tags/`; every template the layer block references present under `templates/`; every `checks:` id in the registry; no reference to a layer outside itself. A layer preset also *reuses* vault tags it never lists in `provides.tags` — every `structure.levels[].tag` and, whenever `index: required`, `content/index` — check each against the vault's existing tag definitions and widen its `layers:` list to include the new layer.
 
 ## Install vs. attach
 
