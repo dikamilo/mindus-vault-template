@@ -68,7 +68,7 @@ Report and, where possible, fix: the four symlinks (`AGENTS.md`, `CLAUDE.md`, `.
 
 ## Safety rails — validate after every mutation
 
-Schema-valid against `system/schema/vault.schema.json`; every declared path exists; every referenced template, tag and voice file exists; no grant names an unknown skill; no two layers overlap on `path`; `links.inbound_from` and `links.outbound_to` agree pairwise; every layer's `vocabulary` and its tags' `layers:` fields agree; every `checks:` id is in the registry (`references/checks.md`); exactly one layer per singleton role (`inbox`/`outputs`/`assets`); no config key nothing reads (`config-unused`). Removing a layer never deletes its content. Every mutation writes a record to `outputs/configure/` and is shown as a diff before it is applied.
+Schema-valid against `system/schema/vault.schema.json`; every declared path exists; every referenced template, tag and voice file exists; no grant names an unknown skill; no two layers overlap on `path`; `links.inbound_from` and `links.outbound_to` agree pairwise; every layer's `vocabulary` and its tags' `layers:` fields agree; every `checks:` id is in the registry (`references/checks.md`); exactly one layer per singleton role (`inbox`/`outputs`/`assets`); no config key nothing reads (`config-unused`). Removing a layer never deletes its content. Every mutation writes a record to `outputs/configure/` and is shown as a diff before it is applied. Every mutation to `vault.yaml` regenerates `meta/vault.md` in the same pass — it claims to be `configure`-generated, so a change here that leaves it stale is a bug, not an omission.
 
 ## Reference files
 
