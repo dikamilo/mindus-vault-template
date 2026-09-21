@@ -6,7 +6,7 @@ description: The setup and customization skill - the only skill that writes meta
 # configure
 
 Reads: `meta/vault.yaml`, `meta/presets/`.
-Writes: `meta/`, new layer folders, `outputs/configure/`, `log.md`. Also root files: `README.md` at first run, and repaired symlinks whenever the installation check runs. Delegates index notes to `scaffold`.
+Writes: `meta/`, new layer folders, `outputs/configure/`, `log.md`. Also root files: `README.md` at first run and on every layer install, and repaired symlinks whenever the installation check runs. Delegates index notes to `scaffold`.
 
 This skill is conversational — there is no flag or subcommand grammar. Match what the user says against the intent table below; when nothing matches closely, ask what they want rather than guessing.
 
@@ -47,7 +47,7 @@ Take "not now" for an answer at any point and continue with whatever else was as
 
 ## Installing and attaching presets
 
-- **Install** (layer or vocabulary preset): copy `tags/`, `templates/` and any `voice/` files into `meta/`; register each template under `templates:` and each voice file as a `voice.contexts.<name>` key. Idempotent, touches no layer. For a layer preset, also append the layer block to `vault.yaml`, create its folder, grant it a `structure` entry naming `scaffold`, then call `scaffold` to write its `index.md` — `configure` never writes an index note itself.
+- **Install** (layer or vocabulary preset): copy `tags/`, `templates/` and any `voice/` files into `meta/`; register each template under `templates:` and each voice file as a `voice.contexts.<name>` key. Idempotent, touches no layer. For a layer preset, also append the layer block to `vault.yaml`, create its folder, grant it a `structure` entry naming `scaffold`, then call `scaffold` to write its `index.md` — `configure` never writes an index note itself. Also update the root `README.md`'s layer list and any claim it makes about how many or which layers exist — it goes stale the same way `meta/vault.md` does, and nothing else regenerates it.
 - **Attach** (vocabulary only, repeatable): record the pairing on both sides — the layer's `vocabulary.content` / `vocabulary.tags` / `vocabulary.frontmatter.recommended` gains the preset's tags; each tag definition's `layers:` field gains the layer's name. If attaching makes no sense (e.g. `note-status` onto a `holds: files` layer), warn and proceed only if the user still wants it.
 - A layer preset declaring `requires: [<vocabulary>]` installs and attaches that vocabulary first.
 - Show the diff before writing anything.
@@ -68,7 +68,7 @@ Report and, where possible, fix: the four symlinks (`AGENTS.md`, `CLAUDE.md`, `.
 
 ## Safety rails — validate after every mutation
 
-Schema-valid against `system/schema/vault.schema.json`; every declared path exists; every referenced template, tag and voice file exists; no grant names an unknown skill; no two layers overlap on `path`; `links.inbound_from` and `links.outbound_to` agree pairwise; every layer's `vocabulary` and its tags' `layers:` fields agree; every `checks:` id is in the registry (`references/checks.md`); exactly one layer per singleton role (`inbox`/`outputs`/`assets`); no config key nothing reads (`config-unused`). Removing a layer never deletes its content. Every mutation writes a record to `outputs/configure/` and is shown as a diff before it is applied. Every mutation to `vault.yaml` regenerates `meta/vault.md` in the same pass — it claims to be `configure`-generated, so a change here that leaves it stale is a bug, not an omission.
+Schema-valid against `system/schema/vault.schema.json`; every declared path exists; every referenced template, tag and voice file exists; no grant names an unknown skill; no two layers overlap on `path`; `links.inbound_from` and `links.outbound_to` agree pairwise; every layer's `vocabulary` and its tags' `layers:` fields agree; every `checks:` id is in the registry (`references/checks.md`); exactly one layer per singleton role (`inbox`/`outputs`/`assets`); no config key nothing reads (`config-unused`). Removing a layer never deletes its content. Every mutation writes a record to `outputs/configure/` and is shown as a diff before it is applied. Every mutation to `vault.yaml` regenerates `meta/vault.md` in the same pass — it claims to be `configure`-generated, so a change here that leaves it stale is a bug, not an omission. Any layer install also updates root `README.md` to match, for the same reason.
 
 ## Reference files
 
