@@ -8,10 +8,10 @@ Every id usable in a layer's `checks:`. **M** = mechanical; **J** = judgement. S
 |---|---|
 | `core` | `frontmatter-parseable`, `frontmatter-required`, `content-tag-exactly-one`, `tag-known`, `tag-allowed-in-layer`, `title-present` |
 | `frontmatter` | `frontmatter-parseable`, `frontmatter-required`, `title-present` — `core` without the `content/*` rules, for layers whose notes carry `output/*` instead |
-| `structure` | `hub-per-folder`, `hub-naming`, `index-present`, `index-sync`, `index-lists-hubs-only`, `no-notes-at-root`, `level-hubs`, `depth-limit`, `hubs-field-present`, `hubs-primary-matches-folder`, `hubs-target-is-hub`, `hub-claim-reciprocal`, `hub-prose-is-list` |
+| `structure` | `hub-per-folder`, `hub-naming`, `index-present`, `index-sync`, `index-lists-hubs-only`, `no-notes-at-root`, `level-hubs`, `depth-limit`, `hubs-field-present`, `hubs-primary-matches-folder`, `hubs-target-is-hub`, `hub-claim-reciprocal`, `hub-prose-is-list`, `level-folders`, `level-content` |
 | `thresholds` | `hub-max-children`, `hub-underfull`, `note-max-words`, `note-min-words`, `promote-candidate`, `sibling-cluster` |
 | `quality` | `duplicates`, `contradictions`, `orphans`, `atomicity`, `language`, `stale-note` |
-| `links` | `links-resolve`, `embeds-resolve`, `links-inbound-policy`, `links-outbound-policy` |
+| `links` | `links-resolve`, `embeds-resolve`, `links-inbound-policy`, `links-outbound-policy`, `links-isolated` |
 | `flat` | `dated-filename`, `partition-valid`, `partition-tag`, `retention`, `age-window`, `output-links-notes`, `worklist-abandoned` |
 | `lifecycle` | `lifecycle-fields`, `lifecycle-value`, `lifecycle-stale` |
 | `all` | Everything applicable to the layer's archetype |
@@ -45,13 +45,15 @@ Every id usable in a layer's `checks:`. **M** = mechanical; **J** = judgement. S
 | `hubs-target-is-hub` | M | error | A `hubs` entry pointing at a missing or non-hub note |
 | `hub-claim-reciprocal` | J | warning | A secondary hub claim the claiming hub's prose never mentions |
 | `hub-prose-is-list` | J | warning | Hub prose degenerating into an inventory |
+| `level-folders` | M | error | At a level declaring `folders`: a folder whose name is not in the set, or a `required` folder missing under its parent hub. Silent where no level declares `folders` |
+| `level-content` | M | error | A non-hub note whose `content/*` tag its folder does not accept — per `folders.<name>.content`, else `levels[].content`. Silent where neither is set |
 
 ## Thresholds
 
 | Id | M/J | Severity | Reads |
 |---|---|---|---|
 | `hub-max-children` | M | warning | `thresholds.max_children` |
-| `hub-underfull` | M | info | One child and no prose of its own |
+| `hub-underfull` | M | info | One child and no prose of its own. Skips `required` folders |
 | `note-max-words` | M | warning | `thresholds.max_words` |
 | `note-min-words` | M | info | `thresholds.min_words` if set |
 | `promote-candidate` | M | info | `thresholds.promote_backlinks` |
@@ -77,6 +79,7 @@ Every id usable in a layer's `checks:`. **M** = mechanical; **J** = judgement. S
 | `embeds-resolve` | M | warning | An embed with no target |
 | `links-inbound-policy` | M | error | A link from a layer the target's `inbound_from` excludes. **Ignores links whose source is the `outputs` role** |
 | `links-outbound-policy` | M | error | A link to a layer this layer's `outbound_to` excludes |
+| `links-isolated` | M | error | A link between two different subtrees rooted at the level named in `links.isolate` — hub notes included. The layer `index.md` sits above every subtree and is exempt. **Ignores links whose source is the `outputs` role** |
 | `orphan-assets` | M | info | A file in an `assets` layer no note references |
 
 ## Flat layers

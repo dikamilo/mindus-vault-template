@@ -12,9 +12,20 @@ A layer's `structure.depth` sets the ceiling on nesting, `unbounded` by default.
 
 `depth: 0` is a legal, degenerate case: an index at the root and nothing enforced below it. It still holds notes subject to the vault's tag and frontmatter rules — only the hub grammar switches off.
 
+## Declared level shape
+
+A level may say more than its hub tag. Read `structure.levels[]` before placing anything in a layer that uses these keys:
+
+- **`content`** — the only `content/*` tags a note may carry directly in a folder at that level. A note goes to the folder whose `content` accepts its tag; if none does at the level you were aiming for, it does not belong there.
+- **`folders`** — a closed set of fixed folder names for that level, each with its own optional `content` and hub `template`. No other folder may be created at that level, by any skill. Links to these hubs use the path form (`[[<layer>/<parent>/<folder>/<folder>|<folder>]]`) whenever the name repeats across parents.
+- **`required: true`** on a folder — it is created with its parent hub, in the same pass, even while empty. It is a deliberate exception to "hubs earn their existence" below: a declared shape is drawn in advance. It is never collapsed, merged, renamed or split, and the thresholds never propose it.
+- **`links.isolate: <level name>`** — each subtree rooted at that level is self-contained: nothing in one may link into another.
+
+Lint checks all four (`level-folders`, `level-content`, `links-isolated`).
+
 ## When a hub earns its existence — thresholds
 
-Read the layer's `structure.thresholds` before acting; these are the defaults. Any may be `off`.
+Read the layer's `structure.thresholds` before acting; these are the defaults. Any may be `off`. None of them applies to a `required` folder, and none may create a folder at a level with a closed `folders` set.
 
 | Trigger | Threshold | Action |
 |---|---|---|

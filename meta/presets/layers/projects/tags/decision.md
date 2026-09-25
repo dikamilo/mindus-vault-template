@@ -14,6 +14,6 @@ template: decision
 
 # content/decision
 
-What was decided, why, and what was rejected. A decision note is not a diary entry — it exists so a future reader can reconstruct the reasoning without re-litigating it.
+What was decided, why, and what was rejected. A decision note lives in its project's `decisions/` folder, and its primary `hubs` entry is that folder's `decisions` hub in path form — `[[<layer>/<project>/decisions/decisions|decisions]]` — because every project has a `decisions` hub and a bare `[[decisions]]` is ambiguous. A decision note is not a diary entry — it exists so a future reader can reconstruct the reasoning without re-litigating it.
 
-Write at least: the decision itself, the alternative(s) considered and why they lost, and anything that would change if reconsidered. If a decision is reversed later, capture a new decision note explaining the reversal rather than editing the old one — the record of having changed your mind is itself worth keeping.
+Write at least: the decision itself, the alternative(s) considered and why they lost, and anything that would change if reconsidered. If a decision is reversed later, capture a new decision note explaining the reversal rather than editing the old one — the record of having changed your mind is itself worth keeping. A decision that acts on an [[idea]] links back to it.
