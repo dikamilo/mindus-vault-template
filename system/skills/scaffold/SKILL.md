@@ -12,9 +12,10 @@ Writes: folders, hub notes and layer indexes, in layers granting `scaffold` `str
 
 1. Confirm the target layer grants `scaffold` the `structure` verb.
 2. Ask for whatever is missing: the name, its parent, a short description.
-3. Create the folder and write the hub note from the layer's `templates.hub` (or, for a brand-new layer's root, `templates.index`) — never freehand.
-4. If the new thing is top-level, add it to the layer's `index.md` in the same pass.
-5. Append a `log.md` entry.
+3. Create the folder and write the hub note from the template its level names — `levels[].folders.<name>.template`, else `levels[].template`, else the layer's `templates.hub` (or, for a brand-new layer's root, `templates.index`) — never freehand. At a level with a closed `folders` set, refuse any name not in it.
+4. If the next level declares `required` folders, create each of them under the new hub in the same pass, the same way.
+5. If the new thing is top-level, add it to the layer's `index.md` in the same pass.
+6. Append a `log.md` entry.
 
 ## What this skill does not do
 

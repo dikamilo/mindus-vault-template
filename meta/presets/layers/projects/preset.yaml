@@ -1,13 +1,13 @@
 preset:
   name: projects
-  version: 1
+  version: 3
   spec_version: 3
   description: >
-    A shallow hub-tree of projects — one hub per project, decisions recorded
-    alongside it, archived projects moved rather than deleted.
+    A shallow hub-tree of projects — one hub per project, each with a decisions
+    and an ideas sub-hub, archived projects moved rather than deleted.
   provides:
-    tags:      [content/project, content/decision]
-    templates: [project, decision]
+    tags:      [content/project, content/decision, content/idea]
+    templates: [project, decision, idea]
   requires: []
   prompts:
     - {key: path, question: "Folder name?", default: projects/}
@@ -18,18 +18,23 @@ layer:
   title: Projects
   description: Active and past projects, one hub each.
   structure:
-    depth: 1
+    depth: 2
     beyond: free
     index: required
     levels:
-      - {name: project, tag: content/project, template: project}
+      - {name: project, tag: content/project, template: project, content: []}
+      - name: section
+        tag: content/hub
+        folders:
+          decisions: {required: true, content: [decision]}
+          ideas:     {required: true, content: [idea]}
     thresholds:
       max_children: 30
-      split_siblings: off
+      split_siblings: "off"
       promote_backlinks: 8
       max_words: 800
   vocabulary:
-    content: [decision]
+    content: [decision, idea]
     require_exactly_one: true
     frontmatter:
       required: [title, tags, hubs]
@@ -43,7 +48,7 @@ layer:
     stale_after: 90d
   ingest_target: false
   discoverable: true
-  links: {inbound_from: "*"}
+  links: {inbound_from: "*", isolate: project}
   access:
     write:     [capture, refactor]
     structure: [capture, scaffold, refactor]

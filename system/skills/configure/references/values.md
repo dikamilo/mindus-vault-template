@@ -54,6 +54,11 @@
 | `levels[].tag` | a `content/*` tag | `content/hub` |
 | `levels[].name` | label used in messages | none |
 | `levels[].template` | template name | layer's `templates.hub` |
+| `levels[].content` | list of `content/*` values, bare names — the only tags a non-hub note may carry directly in a folder at this level. Each must also be in `vocabulary.content` | `vocabulary.content` |
+| `levels[].folders` | map of folder name → folder spec. When present, the set is **closed**: these are the only folders allowed at this level, each filling the level's hub role under a fixed name. Omitted = any name, as before | none |
+| `levels[].folders.<name>.required` | bool. Created together with its parent hub, and never collapsed, merged, renamed or split | `false` |
+| `levels[].folders.<name>.content` | as `levels[].content`, for this folder only | the level's `content` |
+| `levels[].folders.<name>.template` | template name for this folder's hub | the level's `template` |
 | `thresholds.max_children` | integer \| `off` | `15` |
 | `thresholds.split_siblings` | integer \| `off` | `3` |
 | `thresholds.promote_backlinks` | integer \| `off` | `8` |
@@ -87,6 +92,7 @@ With `by: writer`, each partition is named for the skill that writes it and its 
 | `vocabulary.frontmatter.required` / `.recommended` | field names | `[title, tags, hubs]` / `[]` |
 | `links.inbound_from` | list of layer names, `"*"`, `[]` | `"*"` |
 | `links.outbound_to` | same | `"*"` |
+| `links.isolate` | a `structure.levels[].name`. Notes in two different subtrees rooted at that level may not link to each other; links in or out of the layer are unaffected | none |
 | `access.read` / `.write` / `.structure` / `.delete` | skill list | `"*"` / `[]` / `[]` / `[]` |
 
 ## `policy` and action ids

@@ -88,7 +88,20 @@
             "properties": {
               "tag": {"$ref": "#/definitions/tag"},
               "name": {"type": "string"},
-              "template": {"type": "string"}
+              "template": {"type": "string"},
+              "content": {"type": "array", "items": {"type": "string"}},
+              "folders": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "required": {"type": "boolean"},
+                    "content": {"type": "array", "items": {"type": "string"}},
+                    "template": {"type": "string"}
+                  }
+                }
+              }
             }
           }
         },
@@ -166,7 +179,8 @@
             {"type": "array", "items": {"type": "string"}},
             {"type": "string", "enum": ["*"]}
           ]
-        }
+        },
+        "isolate": {"type": "string", "description": "A structure.levels[].name; no links between two different subtrees rooted at that level"}
       }
     },
     "access": {
